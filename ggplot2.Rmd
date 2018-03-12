@@ -8,6 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(ggthemes)
 ```
 
 ## So excited to make some ggplots!
@@ -27,3 +28,51 @@ Make a scatterplot of `hwy` vs `cty` mileage with different colors representing 
 ggplot(mpg, aes(y = hwy, x = cty, shape = fl, color = class)) + geom_point(alpha = 0.4)
 # aes call expects names of columns (unquoted) in your data frame, NOT quoted strings...
 ```
+
+Practice faceting
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
+  geom_point() + 
+  facet_wrap(~ manufacturer) +
+  theme_bw()
+```
+
+ggthemes package has different themes for ggplot
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
+  geom_point() + 
+  facet_wrap(~ manufacturer, ncol=5, scales="free") +
+  theme_few()
+```
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy)) + 
+  geom_point() +
+  geom_smooth()
+```
+
+```{r}
+set.seed(444)
+ggplot(mpg, aes(x = drv, y = hwy)) +
+  geom_violin() +
+  geom_jitter(alpha = 0.4)
+```
+
+```{r}
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Highway mileage vs. engine size", x = "Engine size (L)", y = "Highway mileage (mpg)") +
+  theme_few() + 
+  theme(text = element_text(size = 16))  # change label text size
+
+# Can save a theme to a variable to re-use
+mytheme <- theme_few() + theme(text = element_text(size = 16))
+
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Highway mileage vs. engine size", x = "Engine size (L)", y = "Highway mileage (mpg)") +
+  mytheme
+```
+
