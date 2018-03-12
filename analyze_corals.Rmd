@@ -1,0 +1,34 @@
+---
+title: "analyze corals"
+author: "Ross Cunning"
+date: "3/12/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Data analysis
+
+Here we will analyze this new _amazing_ data about corals:
+
+```{r import_data}
+corals <- read.table("data/corals.txt", header=T)
+corals
+```
+
+What is the average coral size?
+```{r}
+mean_size <- mean(corals$size)
+mean_size
+```
+
+## Plot coral sizes
+
+```{r}
+plot(corals$size, xlab="Coral", ylab="Size")
+
+boxplot(corals$size, ylab="Size")
+```
+
