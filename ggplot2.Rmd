@@ -76,3 +76,22 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
   mytheme
 ```
 
+
+```{r}
+# geom_bar automatically knows to use the count for the y-axis (default arg `stat = "count"`)
+ggplot(mpg, aes(x = fl, fill = class)) + 
+  geom_bar()
+
+ggplot(mpg, aes(x = fl, fill = class)) + 
+  geom_bar(position = "fill")
+
+myplot <- ggplot(mpg, aes(x = fl, fill = class)) + 
+  geom_bar(position = "dodge") +
+  labs(title="Awesome plot") +
+  mytheme
+
+# Saving plots
+ggsave(file="output/saved_plot.png", plot=myplot,
+       width=5, height=5, units="in")
+```
+
