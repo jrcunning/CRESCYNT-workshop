@@ -7,9 +7,12 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
 ## So excited to make some ggplots!
 ```{r}
-
+my_plot <- ggplot(data = mpg, mapping = aes(x = displ, y = hwy))
+  
+my_plot + geom_point()
 ```
