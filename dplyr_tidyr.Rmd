@@ -12,6 +12,8 @@ library(tidyverse)
 library(skimr)
 ```
 
+# Learning dplyr
+
 ```{r}
 # Load gapminder data
 gapminder <- read_csv("https://raw.githubusercontent.com/jules32/2017-11-30-MBARI/gh-pages/data/gapminder.csv")
@@ -27,8 +29,6 @@ unique(gapminder$country)
 summary(gapminder)
 skim(gapminder)  # Cool way of getting extra info and some visualization
 ```
-
-# Learning dplyr
 
 ### Filtering and selecting
 ```{r}
@@ -51,5 +51,50 @@ gapminder %>%
 gapminder %>%
   mutate(gdp = gdpPercap * pop) %>%
   arrange(desc(gdp))
+```
+
+### Grouping
+```{r}
+gapminder %>%
+  mutate(gdp = gdpPercap * pop) %>%
+  group_by(continent) %>%
+  summarise(country=country[which.max(gdp)], max=max(gdp))
+
+gapminder %>%
+  group_by(country) %>%
+  mutate(gdp = gdpPercap * pop, max_gdp = max(gdp)) %>%
+  ungroup()
+```
+
+### Joining
+
+left_join: keeps all keys present in left dataset
+right_join: keeps all keys present in right dataset
+inner_join: keeps only keys present in both datasets
+full_join: keeps all keys present in either dataset
+argument by = key column -- must match exactly!
+
+```{r}
+# Read in CO2 dataset
+co2 <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/co2.csv")
+
+# Join co2 with gapminder dataset
+gapminder %>%
+  filter(year == 2007) %>%
+  right_join(co2)
+
+```
+
+# Learning tidyr
+
+```{r}
+# Wide gapminder dataset
+gap_wide <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/gapminder_wide.csv")
+
+# Data is not tidy... need to make it long, with single value column
+gap_wide %>%
+  gather(observation, value, -continent, -country) %>%
+  separate(observation, into = c("obs_type", "year"), convert = TRUE) %>%
+  spread(obs_type, value)
 ```
 
