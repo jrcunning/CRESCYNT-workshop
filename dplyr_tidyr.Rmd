@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
+library(skimr)
 ```
 
 ```{r}
@@ -19,5 +20,36 @@ gapminder <- read_csv("https://raw.githubusercontent.com/jules32/2017-11-30-MBAR
 str(gapminder)
 dim(gapminder)
 unique(gapminder$country)
+```
+
+```{r}
+# Summarize dataset
+summary(gapminder)
+skim(gapminder)  # Cool way of getting extra info and some visualization
+```
+
+# Learning dplyr
+
+### Filtering and selecting
+```{r}
+filter(gapminder, country=="Iran")  # filter on certain variables
+filter(gapminder, lifeExp < 30)
+filter(gapminder, country %in% c("Afghanistan", "Rwanda"))
+select(gapminder, country, year, pop)  # select certain columns
+select(gapminder, -continent)  # get all except column
+```
+
+### Pipes
+```{r}
+gapminder %>%
+  select(-continent) %>%
+  filter(country == "Iran")
+```
+
+### Mutate
+```{r}
+gapminder %>%
+  mutate(gdp = gdpPercap * pop) %>%
+  arrange(desc(gdp))
 ```
 
