@@ -1,0 +1,23 @@
+---
+title: "Learning dplyr and tidyr"
+author: "Ross Cunning"
+date: "3/13/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+```
+
+```{r}
+# Load gapminder data
+gapminder <- read_csv("https://raw.githubusercontent.com/jules32/2017-11-30-MBARI/gh-pages/data/gapminder.csv")
+
+# Inspect dataset
+str(gapminder)
+dim(gapminder)
+unique(gapminder$country)
+```
+
